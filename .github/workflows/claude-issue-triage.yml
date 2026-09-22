@@ -1,0 +1,32 @@
+name: Claude Issue Triage
+
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  triage:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write
+      id-token: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Run Claude Issue Triage
+        id: claude-triage
+        uses: anthropics/claude-code-action@v1
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          prompt: |
+            Analiza el issue #${{ github.event.issue.number }} de este repositorio (título y cuerpo).
+
+            1. Etiqueta el issue con las labels apropiadas según su naturaleza (por ejemplo: bug, enhancement, question, documentation, duplicate, wontfix, según corresponda y existan en el repo; crea labels nuevas solo si es claramente necesario).
+            2. Publica un comentario en el issue con un diagnóstico general del problema: causa probable, área del código afectada (revisa game.js, index.html, style.css según aplique), y posibles enfoques de solución a alto nivel. NO implementes la solución ni escribas código de parche — solo diagnóstico, para que el equipo lo use como base para el desarrollo posterior.
+          claude_args: '--allowedTools "mcp__github__update_issue,mcp__github__add_issue_comment,mcp__github__get_issue,mcp__github__list_labels_for_repo"'
+          # See https://github.com/anthropics/claude-code-action/blob/main/docs/usage.md
+          # or https://code.claude.com/docs/en/cli-reference for available options
