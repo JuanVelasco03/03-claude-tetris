@@ -178,6 +178,7 @@ function spawn() {
   if (collide(current.shape, current.x, current.y)) {
     endGame();
   }
+  draw();
   drawNext();
   drawHold();
 }
@@ -198,6 +199,7 @@ function holdSwap() {
   if (collide(current.shape, current.x, current.y)) {
     endGame();
   }
+  draw();
   drawHold();
 }
 
@@ -258,28 +260,45 @@ function draw() {
       drawBlock(ctx, current.x + c, current.y + r, current.shape[r][c], BLOCK);
 }
 
-function drawNext() {
-  const NB = 30;
-  nextCtx.clearRect(0, 0, nextCanvas.width, nextCanvas.height);
-  const shape = next.shape;
-  const offX = Math.floor((4 - shape[0].length) / 2);
-  const offY = Math.floor((4 - shape.length) / 2);
+const PREVIEW_PADDING = 12;
+
+function drawPreviewPiece(context, canvas, shape) {
+  let minR = Infinity, maxR = -Infinity, minC = Infinity, maxC = -Infinity;
   for (let r = 0; r < shape.length; r++)
     for (let c = 0; c < shape[r].length; c++)
-      drawBlock(nextCtx, offX + c, offY + r, shape[r][c], NB);
+      if (shape[r][c]) {
+        minR = Math.min(minR, r);
+        maxR = Math.max(maxR, r);
+        minC = Math.min(minC, c);
+        maxC = Math.max(maxC, c);
+      }
+  if (minR === Infinity) return;
+
+  const bboxRows = maxR - minR + 1;
+  const bboxCols = maxC - minC + 1;
+  const available = Math.min(canvas.width, canvas.height) - PREVIEW_PADDING * 2;
+  const size = Math.floor(available / Math.max(bboxRows, bboxCols));
+  const startX = (canvas.width - bboxCols * size) / 2 - minC * size;
+  const startY = (canvas.height - bboxRows * size) / 2 - minR * size;
+
+  context.save();
+  context.translate(startX, startY);
+  for (let r = 0; r < shape.length; r++)
+    for (let c = 0; c < shape[r].length; c++)
+      drawBlock(context, c, r, shape[r][c], size);
+  context.restore();
+}
+
+function drawNext() {
+  nextCtx.clearRect(0, 0, nextCanvas.width, nextCanvas.height);
+  drawPreviewPiece(nextCtx, nextCanvas, next.shape);
 }
 
 function drawHold() {
-  const NB = 30;
   holdCtx.clearRect(0, 0, holdCanvas.width, holdCanvas.height);
   holdCanvas.classList.toggle('locked', !canHold);
   if (held === null) return;
-  const shape = PIECES[held];
-  const offX = Math.floor((4 - shape[0].length) / 2);
-  const offY = Math.floor((4 - shape.length) / 2);
-  for (let r = 0; r < shape.length; r++)
-    for (let c = 0; c < shape[r].length; c++)
-      drawBlock(holdCtx, offX + c, offY + r, shape[r][c], NB);
+  drawPreviewPiece(holdCtx, holdCanvas, PIECES[held]);
 }
 
 function endGame() {

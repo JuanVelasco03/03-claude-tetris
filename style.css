@@ -116,6 +116,8 @@ body {
   display: flex;
   gap: 20px;
   align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 #board {
@@ -128,11 +130,26 @@ body {
 
 /* ---- Panel lateral ---- */
 .panel {
-  width: 160px;
+  width: 220px;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   padding-top: 4px;
+}
+
+.stats-row {
+  display: flex;
+  gap: 16px;
+}
+
+.stats-row .panel-section {
+  flex: 1;
+}
+
+.pieces-row {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .panel-section {
@@ -159,21 +176,27 @@ body {
 #next-canvas,
 #hold-canvas {
   display: block;
+  width: 100px;
+  height: 100px;
   border: 1px solid var(--border);
   background: var(--board-bg);
   border-radius: 4px;
 }
 
+/* Ya se usó el hold en este turno: se señala con el borde, sin ocultar la pieza. */
 #hold-canvas.locked {
-  opacity: 0.35;
+  opacity: 0.7;
+  border-style: dashed;
+  border-color: var(--text-dim);
 }
 
 /* ---- Controles ---- */
 .controls ul {
   list-style: none;
   display: flex;
-  flex-direction: column;
-  gap: 6px;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 6px 14px;
 }
 
 .controls li {
@@ -182,6 +205,7 @@ body {
   display: flex;
   align-items: center;
   gap: 4px;
+  white-space: nowrap;
 }
 
 kbd {
