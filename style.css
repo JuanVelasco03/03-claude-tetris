@@ -156,11 +156,16 @@ body {
   letter-spacing: 1px;
 }
 
-#next-canvas {
+#next-canvas,
+#hold-canvas {
   display: block;
   border: 1px solid var(--border);
   background: var(--board-bg);
   border-radius: 4px;
+}
+
+#hold-canvas.locked {
+  opacity: 0.35;
 }
 
 /* ---- Controles ---- */
