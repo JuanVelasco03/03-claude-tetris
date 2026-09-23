@@ -43,7 +43,7 @@ const overlayScore = document.getElementById('overlay-score');
 const restartBtn = document.getElementById('restart-btn');
 const themeToggleInput = document.getElementById('theme-toggle-input');
 
-let board, current, next, score, lines, level, paused, gameOver, lastTime, dropAccum, dropInterval, animId, menuOpen, startLevel;
+let board, current, next, score, lines, level, paused, gameOver, lastTime, dropAccum, dropInterval, animId, menuOpen, startLevel, runStartLevel;
 
 const THEME_KEY = 'tetris-theme';
 
@@ -130,7 +130,7 @@ function clearLines() {
   if (cleared) {
     lines += cleared;
     score += (LINE_SCORES[cleared] || 0) * level;
-    level = Math.floor(lines / 10) + startLevel;
+    level = Math.floor(lines / 10) + runStartLevel;
     dropInterval = Math.max(100, 1000 - (level - 1) * 90);
     updateHUD();
   }
@@ -285,7 +285,8 @@ function init() {
   board = createBoard();
   score = 0;
   lines = 0;
-  level = startLevel;
+  runStartLevel = startLevel;
+  level = runStartLevel;
   paused = false;
   gameOver = false;
   dropInterval = Math.max(100, 1000 - (level - 1) * 90);
@@ -302,7 +303,8 @@ function init() {
 document.addEventListener('keydown', e => {
   if (e.code === 'KeyP' || e.code === 'Escape') { togglePause(); return; }
   if (menuOpen) {
-    if (e.code === 'Space' || e.code === 'Enter' || e.code.startsWith('Arrow')) e.preventDefault();
+    const onSelect = document.activeElement === pauseLevelSelect;
+    if (!onSelect && (e.code === 'Space' || e.code === 'Enter' || e.code.startsWith('Arrow'))) e.preventDefault();
     return;
   }
   if (paused || gameOver) return;
