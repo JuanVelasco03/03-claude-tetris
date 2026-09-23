@@ -59,7 +59,7 @@
             <li><kbd>↑</kbd> rotar</li>
             <li><kbd>↓</kbd> bajar</li>
             <li><kbd>Space</kbd> caída</li>
-            <li><kbd>P</kbd> pausa</li>
+            <li><kbd>P</kbd> / <kbd>Esc</kbd> pausa</li>
           </ul>
         </div>
       </aside>
@@ -88,6 +88,28 @@
         <div id="hs-start-table" class="hs-table-wrap"></div>
         <button id="start-play-btn">Jugar</button>
         <button id="hs-reset-btn">Resetear records</button>
+      </div>
+    </div>
+
+    <div id="pause-overlay" class="overlay hidden">
+      <div class="overlay-box pause-box">
+        <p id="pause-title">PAUSA</p>
+        <div id="pause-menu" class="pause-menu">
+          <button id="pause-resume-btn">Reanudar</button>
+          <button id="pause-restart-btn">Reiniciar</button>
+          <button id="pause-controls-btn">Ver controles</button>
+          <div class="pause-level-row">
+            <label for="pause-level-select">Nivel inicial</label>
+            <select id="pause-level-select"></select>
+          </div>
+        </div>
+        <ul id="pause-controls-list" class="pause-controls-list hidden">
+          <li><kbd>←</kbd><kbd>→</kbd> mover</li>
+          <li><kbd>↑</kbd> / <kbd>X</kbd> rotar</li>
+          <li><kbd>↓</kbd> bajar</li>
+          <li><kbd>Space</kbd> caída instantánea</li>
+          <li><kbd>P</kbd> / <kbd>Esc</kbd> pausa</li>
+        </ul>
       </div>
     </div>
   </div>
