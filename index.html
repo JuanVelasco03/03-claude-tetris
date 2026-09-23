@@ -33,6 +33,11 @@
         </div>
 
         <div class="panel-section">
+          <span class="label">COMBO</span>
+          <span class="value" id="hs-combo">0</span>
+        </div>
+
+        <div class="panel-section">
           <span class="label">NEXT</span>
           <canvas id="next-canvas" width="120" height="120"></canvas>
         </div>
@@ -54,7 +59,25 @@
       <div class="overlay-box">
         <p id="overlay-title">GAME OVER</p>
         <p id="overlay-score"></p>
+        <div id="hs-save-row" class="hs-save-row hidden">
+          <input type="text" id="hs-name-input" maxlength="12" placeholder="Tu nombre" />
+          <button id="hs-save-btn">Guardar</button>
+        </div>
+        <div id="hs-overlay-table" class="hs-table-wrap"></div>
         <button id="restart-btn">Reiniciar</button>
+      </div>
+    </div>
+
+    <div id="start-overlay" class="overlay">
+      <div class="overlay-box">
+        <p id="start-title">TETRIS</p>
+        <div class="hs-summary">
+          <span>Mejor combo: <strong id="hs-best-combo">0</strong></span>
+          <span>Líneas máximas: <strong id="hs-best-lines">0</strong></span>
+        </div>
+        <div id="hs-start-table" class="hs-table-wrap"></div>
+        <button id="start-play-btn">Jugar</button>
+        <button id="hs-reset-btn">Resetear records</button>
       </div>
     </div>
   </div>
