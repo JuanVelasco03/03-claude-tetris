@@ -244,3 +244,30 @@ kbd {
   background: var(--accent);
   opacity: 0.85;
 }
+
+/* ==== SKINS ==== */
+#skin-select {
+  background: var(--kbd-bg);
+  color: var(--text);
+  border: 1px solid var(--kbd-border);
+  border-radius: 4px;
+  padding: 4px 6px;
+  font-size: 12px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+body.skin-neon {
+  --board-bg: #000000;
+  --grid-line: #0a2a1f;
+}
+
+body.skin-pastel {
+  --board-bg: #fdf6f0;
+  --grid-line: #ecdfe6;
+}
+
+body.skin-pixel {
+  --board-bg: #101018;
+  --grid-line: #2c2c3a;
+}

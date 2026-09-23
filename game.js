@@ -16,6 +16,89 @@ const COLORS = [
   '#b0bec5', // Nut - metallic gray
 ];
 
+// ---- SKINS ----
+const SKINS = {
+  retro: {
+    colors: COLORS,
+    drawBlock(context, x, y, colorIndex, size, alpha) {
+      if (!colorIndex) return;
+      context.globalAlpha = alpha ?? 1;
+      context.fillStyle = this.colors[colorIndex];
+      context.fillRect(x * size + 1, y * size + 1, size - 2, size - 2);
+      // highlight
+      context.fillStyle = 'rgba(255,255,255,0.12)';
+      context.fillRect(x * size + 1, y * size + 1, size - 2, 4);
+      context.globalAlpha = 1;
+    },
+  },
+  neon: {
+    colors: [
+      null,
+      '#00e5ff', '#fff176', '#e040fb', '#69f0ae',
+      '#ff5252', '#448aff', '#ffab40', '#e0e0e0',
+    ],
+    drawBlock(context, x, y, colorIndex, size, alpha) {
+      if (!colorIndex) return;
+      const color = this.colors[colorIndex];
+      context.save();
+      context.globalAlpha = alpha ?? 1;
+      context.shadowBlur = 14;
+      context.shadowColor = color;
+      context.fillStyle = color;
+      context.fillRect(x * size + 2, y * size + 2, size - 4, size - 4);
+      context.restore();
+      context.globalAlpha = 1;
+      context.shadowBlur = 0;
+      context.shadowColor = 'transparent';
+    },
+  },
+  pastel: {
+    colors: [
+      null,
+      '#a8dadc', '#ffe8a3', '#d6c2e8', '#c3e8c3',
+      '#f4b8b8', '#b8d4f4', '#f7d0a8', '#dcdce0',
+    ],
+    drawBlock(context, x, y, colorIndex, size, alpha) {
+      if (!colorIndex) return;
+      const color = this.colors[colorIndex];
+      const px = x * size + 2, py = y * size + 2, s = size - 4;
+      context.globalAlpha = alpha ?? 1;
+      context.fillStyle = color;
+      if (typeof context.roundRect === 'function') {
+        context.beginPath();
+        context.roundRect(px, py, s, s, 6);
+        context.fill();
+      } else {
+        context.fillRect(px, py, s, s);
+      }
+      context.globalAlpha = 1;
+    },
+  },
+  pixel: {
+    colors: COLORS,
+    drawBlock(context, x, y, colorIndex, size, alpha) {
+      if (!colorIndex) return;
+      const color = this.colors[colorIndex];
+      context.globalAlpha = alpha ?? 1;
+      context.fillStyle = color;
+      context.fillRect(x * size + 1, y * size + 1, size - 2, size - 2);
+      // textura de píxeles determinista según x,y,colorIndex (grilla 3x3 para mantener el coste bajo)
+      const px = x * size + 1, py = y * size + 1, s = size - 2;
+      const cell = Math.max(4, Math.ceil(s / 3));
+      for (let gy = 0; gy < s; gy += cell) {
+        for (let gx = 0; gx < s; gx += cell) {
+          const seed = ((x * 31 + gx) * 17 + (y * 31 + gy) * 13 + colorIndex * 7) % 5;
+          if (seed < 3) {
+            context.fillStyle = seed < 2 ? 'rgba(255,255,255,0.15)' : 'rgba(0,0,0,0.12)';
+            context.fillRect(px + gx, py + gy, Math.min(cell, s - gx), Math.min(cell, s - gy));
+          }
+        }
+      }
+      context.globalAlpha = 1;
+    },
+  },
+};
+
 const PIECES = [
   null,
   [[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]], // I
@@ -181,15 +264,7 @@ function updateHUD() {
 }
 
 function drawBlock(context, x, y, colorIndex, size, alpha) {
-  if (!colorIndex) return;
-  const color = COLORS[colorIndex];
-  context.globalAlpha = alpha ?? 1;
-  context.fillStyle = color;
-  context.fillRect(x * size + 1, y * size + 1, size - 2, size - 2);
-  // highlight
-  context.fillStyle = 'rgba(255,255,255,0.12)';
-  context.fillRect(x * size + 1, y * size + 1, size - 2, 4);
-  context.globalAlpha = 1;
+  getActiveSkin().drawBlock(context, x, y, colorIndex, size, alpha);
 }
 
 function drawGrid() {
@@ -327,5 +402,36 @@ document.addEventListener('keydown', e => {
 
 restartBtn.addEventListener('click', init);
 
+// ---- SKINS ----
+const SKIN_KEY = 'tetris-skin';
+const skinSelect = document.getElementById('skin-select');
+let currentSkin = 'retro';
+
+function getActiveSkin() {
+  return SKINS[currentSkin] || SKINS.retro;
+}
+
+function applySkin(skin) {
+  currentSkin = SKINS[skin] ? skin : 'retro';
+  Object.keys(SKINS).forEach(name => document.body.classList.remove(`skin-${name}`));
+  document.body.classList.add(`skin-${currentSkin}`);
+  skinSelect.value = currentSkin;
+  localStorage.setItem(SKIN_KEY, currentSkin);
+  if (board) {
+    draw();
+    drawNext();
+  }
+}
+
+function initSkin() {
+  const saved = localStorage.getItem(SKIN_KEY);
+  applySkin(SKINS[saved] ? saved : 'retro');
+}
+
+skinSelect.addEventListener('change', () => {
+  applySkin(skinSelect.value);
+});
+
 initTheme();
+initSkin();
 init();
