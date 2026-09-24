@@ -44,11 +44,11 @@
         <div class="panel-section controls">
           <span class="label">CONTROLS</span>
           <ul>
-            <li><kbd>←</kbd><kbd>→</kbd> mover</li>
-            <li><kbd>↑</kbd> rotar</li>
-            <li><kbd>↓</kbd> bajar</li>
-            <li><kbd>Space</kbd> caída</li>
-            <li><kbd>P</kbd> pausa</li>
+            <li><kbd>&larr;</kbd><kbd>&rarr;</kbd> mover</li>
+            <li><kbd>&uarr;</kbd> rotar</li>
+            <li><kbd>&darr;</kbd> bajar</li>
+            <li><kbd>Space</kbd> ca&iacute;da</li>
+            <li><kbd>P</kbd><kbd>Esc</kbd> pausa</li>
           </ul>
         </div>
       </aside>
@@ -73,6 +73,37 @@
         </form>
         <div id="overlay-records" class="records hidden"></div>
         <button id="restart-btn">Reiniciar</button>
+      </div>
+    </div>
+
+    <div id="pause-overlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="pause-title">
+      <div class="menu">
+        <p class="menu-title" id="pause-title">PAUSA</p>
+
+        <div id="menu-main" class="menu-view">
+          <button id="resume-btn" class="menu-btn primary">Reanudar</button>
+          <button id="menu-restart-btn" class="menu-btn">Reiniciar</button>
+          <button id="show-controls-btn" class="menu-btn">Ver controles</button>
+
+          <div class="menu-field">
+            <label class="label" for="start-level">NIVEL INICIAL</label>
+            <select id="start-level"></select>
+            <span class="menu-hint"><kbd>&larr;</kbd><kbd>&rarr;</kbd> ajustar &middot; aplica al reiniciar</span>
+          </div>
+        </div>
+
+        <div id="menu-controls" class="menu-view hidden">
+          <ul class="menu-controls-list">
+            <li><span class="keys"><kbd>&larr;</kbd><kbd>&rarr;</kbd></span> mover pieza</li>
+            <li><span class="keys"><kbd>&uarr;</kbd><kbd>X</kbd></span> rotar</li>
+            <li><span class="keys"><kbd>&darr;</kbd></span> bajar una fila</li>
+            <li><span class="keys"><kbd>Space</kbd></span> ca&iacute;da instant&aacute;nea</li>
+            <li><span class="keys"><kbd>P</kbd><kbd>Esc</kbd></span> pausa / men&uacute;</li>
+          </ul>
+          <button id="controls-back-btn" class="menu-btn">Volver</button>
+        </div>
+
+        <p class="menu-nav-hint"><kbd>&uarr;</kbd><kbd>&darr;</kbd> navegar &middot; <kbd>Enter</kbd> elegir &middot; <kbd>Esc</kbd> reanudar</p>
       </div>
     </div>
   </div>
