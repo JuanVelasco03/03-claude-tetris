@@ -240,7 +240,196 @@ kbd {
   transition: background 0.15s;
 }
 
-#restart-btn:hover {
-  background: var(--accent);
+#restart-btn:hover,
+#play-btn:hover,
+#save-score-btn:hover,
+.reset-btn:hover {
   opacity: 0.85;
+}
+
+/* ---- Pantalla de inicio ---- */
+.theme-toggle {
+  z-index: 3;
+}
+
+.overlay {
+  z-index: 2;
+}
+
+#start-title {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 8px;
+  color: var(--accent);
+}
+
+#play-btn {
+  margin-top: 4px;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  border: none;
+  border-radius: 6px;
+  padding: 10px 36px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 2px;
+  transition: background 0.15s;
+}
+
+/* ---- Tabla de records ---- */
+.records {
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--board-bg);
+}
+
+.records.hidden {
+  display: none;
+}
+
+.records .label {
+  text-align: center;
+}
+
+.record-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.record-row {
+  display: grid;
+  grid-template-columns: 18px 1fr auto;
+  gap: 8px;
+  align-items: baseline;
+  font-size: 13px;
+  font-family: 'Courier New', Courier, monospace;
+  color: var(--text);
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.record-row .rank {
+  color: var(--text-dim);
+  font-weight: 700;
+}
+
+.record-row .rname {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: left;
+}
+
+.record-row .rscore {
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.record-row.is-new {
+  background: var(--accent);
+  color: var(--accent-contrast);
+}
+
+.record-row.is-new .rank,
+.record-row.is-new .rscore {
+  color: var(--accent-contrast);
+}
+
+.records-empty {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.record-bests {
+  display: flex;
+  justify-content: space-around;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+.record-best {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  align-items: center;
+}
+
+.record-best .best-value {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.reset-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text-muted);
+  font-size: 11px;
+  padding: 5px 10px;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.reset-btn:hover {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+/* ---- Formulario de nombre ---- */
+.record-msg {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--accent);
+}
+
+.record-msg.hidden,
+.name-form.hidden {
+  display: none;
+}
+
+.name-form {
+  display: flex;
+  gap: 6px;
+}
+
+#name-input {
+  background: var(--kbd-bg);
+  border: 1px solid var(--kbd-border);
+  border-radius: 4px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 13px;
+  padding: 7px 10px;
+  width: 140px;
+}
+
+#name-input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+#save-score-btn {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  border: none;
+  border-radius: 4px;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: background 0.15s;
 }
