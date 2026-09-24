@@ -244,3 +244,135 @@ kbd {
   background: var(--accent);
   opacity: 0.85;
 }
+
+/* ---- Menú de pausa ---- */
+.menu {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px 22px;
+  background: var(--board-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+
+.menu-title {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 6px;
+  color: var(--accent);
+}
+
+.menu-view {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.menu-view.hidden {
+  display: none;
+}
+
+.menu-btn {
+  background: var(--kbd-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: background 0.15s, opacity 0.15s;
+}
+
+.menu-btn:hover {
+  opacity: 0.85;
+}
+
+.menu-btn:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.menu-btn.primary {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  border-color: var(--accent);
+}
+
+.menu-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 6px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+#start-level {
+  background: var(--kbd-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 14px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+#start-level:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.menu-hint {
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--text-muted);
+}
+
+.menu-hint kbd {
+  font-size: 10px;
+  padding: 0 4px;
+}
+
+.menu-controls-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.menu-controls-list li {
+  font-size: 12px;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.menu-controls-list .keys {
+  display: inline-flex;
+  gap: 3px;
+  min-width: 86px;
+}
+
+.menu-nav-hint {
+  text-align: center;
+  font-size: 10px;
+  line-height: 1.8;
+  color: var(--text-dim);
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.menu-nav-hint kbd {
+  font-size: 10px;
+  padding: 0 4px;
+}
