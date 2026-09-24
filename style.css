@@ -506,7 +506,14 @@ body.skin-pixel #board,
 body.skin-pixel #next-canvas,
 body.skin-pixel #restart-btn,
 body.skin-pixel #skin-select,
-body.skin-pixel kbd {
+body.skin-pixel kbd,
+body.skin-pixel .overlay-box,
+body.skin-pixel .pause-menu,
+body.skin-pixel .menu-item,
+body.skin-pixel .ghost-btn,
+body.skin-pixel #player-name,
+body.skin-pixel #save-score-btn,
+body.skin-pixel #play-btn {
   border-radius: 0;
 }
 
@@ -514,4 +521,205 @@ body.skin-pixel #board,
 body.skin-pixel #next-canvas {
   border-width: 2px;
   image-rendering: pixelated;
+}
+
+/* ---- Tabla de records ---- */
+.overlay-box {
+  padding: 24px;
+  max-width: 320px;
+}
+
+.overlay-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  margin-top: 4px;
+}
+
+#start-title {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 6px;
+  color: var(--accent);
+}
+
+.records {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  width: 100%;
+}
+
+.records.hidden {
+  display: none;
+}
+
+.records-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 13px;
+}
+
+.record-row td {
+  padding: 4px 6px;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+}
+
+.record-row:last-child td {
+  border-bottom: none;
+}
+
+.record-pos {
+  color: var(--text-dim);
+  width: 18px;
+  text-align: left;
+}
+
+.record-name {
+  text-align: left;
+  font-family: system-ui, -apple-system, sans-serif;
+  font-weight: 600;
+  max-width: 110px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.record-score {
+  text-align: right;
+  font-weight: 700;
+}
+
+.record-lines {
+  text-align: right;
+  color: var(--text-muted);
+  font-size: 11px;
+  width: 42px;
+}
+
+.record-row.highlight td {
+  background: var(--kbd-bg);
+  color: var(--accent);
+}
+
+.record-row.highlight .record-pos,
+.record-row.highlight .record-lines {
+  color: var(--accent);
+}
+
+.records-empty {
+  font-size: 12px;
+  color: var(--text-muted);
+  padding: 6px 0;
+}
+
+.records-stats {
+  display: flex;
+  gap: 14px;
+  font-size: 10px;
+  letter-spacing: 1px;
+  color: var(--text-dim);
+  font-weight: 600;
+}
+
+.records-stats b {
+  color: var(--accent);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 12px;
+}
+
+/* ---- Formulario de nombre ---- */
+.name-form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  width: 100%;
+}
+
+.name-form.hidden {
+  display: none;
+}
+
+.new-record {
+  font-size: 11px;
+  letter-spacing: 1px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.name-row {
+  display: flex;
+  gap: 6px;
+  width: 100%;
+}
+
+#player-name {
+  flex: 1;
+  min-width: 0;
+  background: var(--board-bg);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  color: var(--text);
+  font-size: 13px;
+  font-family: inherit;
+}
+
+#player-name:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+#save-score-btn {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+#play-btn {
+  background: var(--accent);
+  color: var(--accent-contrast);
+  border: none;
+  border-radius: 6px;
+  padding: 10px 28px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 1px;
+}
+
+.ghost-btn {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 7px 18px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.ghost-btn:hover {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+.ghost-btn.hidden {
+  display: none;
+}
+
+#save-score-btn:hover,
+#play-btn:hover {
+  opacity: 0.85;
 }

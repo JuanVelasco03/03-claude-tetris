@@ -43,6 +43,9 @@ Es una versión jugable del Tetris clásico con todas las mecánicas que esperar
 - **Niveles** que aumentan cada 10 líneas y aceleran la caída.
 - **Menú de pausa** con opciones reales: reanudar, reiniciar, ver controles y elegir el nivel inicial.
 - **Game Over** con opción de reinicio.
+- **Contador de combo**: cuenta los bloqueos consecutivos que limpian línea.
+- **Tabla de récords local** (`localStorage`): top 5 con nombre del jugador, mejor combo y máximo de líneas, visible en la pantalla de inicio y en el Game Over, con botón para resetearla.
+- **Skins visuales** (`retro`, `neon`, `pastel`, `pixel art`) seleccionables desde el panel y recordadas entre partidas.
 
 ---
 
@@ -113,7 +116,8 @@ Define la estructura visual:
 
 - Un `<canvas id="board">` de **300 × 600** píxeles donde se renderiza el tablero.
 - Un panel lateral con `SCORE`, `LINES`, `LEVEL`, vista de la siguiente pieza y la lista de controles.
-- Un overlay para **GAME OVER** y otro con el **menú de pausa** (vista principal y vista de controles).
+- Un overlay para **GAME OVER** (con formulario de nombre y tabla de récords) y otro con el **menú de pausa** (vista principal y vista de controles).
+- Un overlay de **pantalla de inicio** con la tabla de récords y los botones *Jugar* / *Resetear récords*.
 
 ### 2. `style.css`
 
@@ -132,14 +136,19 @@ Contiene toda la lógica del juego. A grandes rasgos:
 - **Puntuación**: usa la tabla clásica `[0, 100, 300, 500, 800]` multiplicada por el nivel actual; el hard drop suma 2 puntos por celda recorrida y el soft drop 1 punto por fila.
 - **Nivel y velocidad**: el nivel sube cada 10 líneas; la velocidad de caída se calcula como `max(100, 1000 − (level − 1) × 90)` milisegundos.
 - **Ghost piece** (`ghostY`): proyecta la posición final de la pieza actual hacia abajo y la dibuja con `globalAlpha = 0.2`.
+- **Combo**: `lockPiece` incrementa `combo` cuando el bloqueo limpia al menos una línea y lo reinicia a 0 cuando no; `maxCombo` guarda el mejor combo de la partida.
+- **Récords** (`loadRecords` / `saveRecords`): se guardan en `localStorage` bajo la clave `tetris-records` con la forma `{ entries: [{ name, score, lines, level, combo, date }], bestCombo, maxLines }`. `qualifies` decide si la puntuación entra en el top 5 (hace falta superar estrictamente a la última), `insertEntry` la coloca y devuelve su posición, y `renderRecords` pinta la tabla resaltando esa fila.
 
 ### Flujo del juego
 
 ```
-init()
-  ├─ createBoard()                  → matriz vacía
-  ├─ next = randomPiece()
-  ├─ spawn()                        → mueve next a current y genera nueva next
+showStartScreen()                   → tabla de récords + botón Jugar
+  └─ resetGame()
+       ├─ createBoard()             → matriz vacía
+       ├─ next = randomPiece()
+       └─ spawn()                   → mueve next a current y genera nueva next
+        ↓
+init()                              → al pulsar Jugar / Reiniciar
   └─ requestAnimationFrame(loop)
         ↓
    loop(timestamp)
@@ -151,7 +160,7 @@ init()
    keydown → mover / rotar / soft-drop / hard-drop / pausa
 ```
 
-Cuando una pieza recién generada ya colisiona al aparecer (`spawn`), se dispara `endGame()` y se muestra el overlay de **Game Over**.
+Cuando una pieza recién generada ya colisiona al aparecer (`spawn`), se dispara `endGame()`: se actualizan el mejor combo y el máximo de líneas, se muestra el overlay de **Game Over** con la tabla de récords y, si la puntuación entra en el top 5, un campo de texto para guardar el nombre.
 
 ---
 
