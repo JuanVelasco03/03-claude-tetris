@@ -44,7 +44,7 @@
             <li><kbd>↑</kbd> rotar</li>
             <li><kbd>↓</kbd> bajar</li>
             <li><kbd>Space</kbd> caída</li>
-            <li><kbd>P</kbd> pausa</li>
+            <li><kbd>P</kbd><kbd>Esc</kbd> pausa</li>
           </ul>
         </div>
       </aside>
@@ -55,6 +55,42 @@
         <p id="overlay-title">GAME OVER</p>
         <p id="overlay-score"></p>
         <button id="restart-btn">Reiniciar</button>
+      </div>
+    </div>
+
+    <div id="pause-overlay" class="overlay hidden">
+      <div class="pause-menu" role="dialog" aria-modal="true" aria-label="Menú de pausa">
+        <p class="pause-title">PAUSA</p>
+
+        <div id="pause-main" class="menu-view">
+          <button type="button" class="menu-item" data-action="resume">Reanudar</button>
+          <button type="button" class="menu-item" data-action="restart">Reiniciar</button>
+          <button type="button" class="menu-item" data-action="controls">Ver controles</button>
+
+          <div class="menu-item level-item" data-action="level" tabindex="-1">
+            <span>Nivel inicial</span>
+            <span class="stepper">
+              <button type="button" class="step" data-step="-1" aria-label="Bajar nivel inicial" tabindex="-1">&#9664;</button>
+              <span id="start-level-value" aria-live="polite">1</span>
+              <button type="button" class="step" data-step="1" aria-label="Subir nivel inicial" tabindex="-1">&#9654;</button>
+            </span>
+          </div>
+
+          <p class="menu-hint">El nivel inicial se aplica al reiniciar</p>
+        </div>
+
+        <div id="pause-controls" class="menu-view hidden">
+          <ul class="menu-keys">
+            <li><span class="keys"><kbd>&#8592;</kbd><kbd>&#8594;</kbd></span> mover pieza</li>
+            <li><span class="keys"><kbd>&#8593;</kbd><kbd>X</kbd></span> rotar</li>
+            <li><span class="keys"><kbd>&#8595;</kbd></span> bajar (soft drop)</li>
+            <li><span class="keys"><kbd>Space</kbd></span> caída instantánea</li>
+            <li><span class="keys"><kbd>P</kbd><kbd>Esc</kbd></span> pausa / menú</li>
+            <li><span class="keys"><kbd>&#8593;</kbd><kbd>&#8595;</kbd></span> navegar el menú</li>
+            <li><span class="keys"><kbd>Enter</kbd></span> elegir opción</li>
+          </ul>
+          <button type="button" class="menu-item" data-action="back">Volver</button>
+        </div>
       </div>
     </div>
   </div>
