@@ -565,3 +565,127 @@ kbd {
   font-size: 10px;
   padding: 0 4px;
 }
+
+/* ---- Selector de skin ---- */
+#skin-select {
+  background: var(--kbd-bg);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 6px 8px;
+  font-family: inherit;
+  font-size: 12px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  width: 100%;
+}
+
+#skin-select:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+/* ---- Skins ----
+   Cada skin redefine las variables de tema; van después de `body.light`
+   para ganar por orden de cascada y aplicarse sin recargar. */
+
+/* Retro usa las variables base: no necesita overrides. */
+
+body.skin-neon {
+  --bg: #04040a;
+  --board-bg: #000000;
+  --border: #1f1f5c;
+  --text: #d6f7ff;
+  --text-dim: #4b4b8a;
+  --text-muted: #7f8fc0;
+  --accent: #00f0ff;
+  --accent-contrast: #04040a;
+  --danger: #ff2d55;
+  --overlay-bg: rgba(0, 0, 10, 0.8);
+  --kbd-bg: #0c0c24;
+  --kbd-border: #26268c;
+  --kbd-text: #8fd6ff;
+  --grid-line: #12123a;
+}
+
+body.skin-neon .game-title {
+  color: var(--accent);
+  text-shadow: 0 0 8px #00f0ff, 0 0 24px #00f0ff, 0 0 48px #0080ff;
+}
+
+body.skin-neon #board,
+body.skin-neon #next-canvas {
+  box-shadow: 0 0 24px rgba(0, 240, 255, 0.25);
+}
+
+body.skin-pastel {
+  --bg: #f7f3fb;
+  --board-bg: #fffdfe;
+  --border: #e2d8ee;
+  --text: #4a4356;
+  --text-dim: #a89bbb;
+  --text-muted: #8c8299;
+  --accent: #b08ad8;
+  --accent-contrast: #ffffff;
+  --danger: #e08b9a;
+  --overlay-bg: rgba(255, 253, 254, 0.8);
+  --kbd-bg: #f0e9f7;
+  --kbd-border: #ddd0ec;
+  --kbd-text: #6e6480;
+  --grid-line: #f1ebf7;
+}
+
+body.skin-pastel .game-title {
+  text-shadow: 0 2px 10px rgba(176, 138, 216, 0.35);
+}
+
+body.skin-pastel #board,
+body.skin-pastel #next-canvas {
+  border-radius: 14px;
+  box-shadow: 0 8px 24px rgba(176, 138, 216, 0.18);
+}
+
+body.skin-pastel #skin-select,
+body.skin-pastel #restart-btn {
+  border-radius: 12px;
+}
+
+body.skin-pixel {
+  --bg: #1b1b26;
+  --board-bg: #10101a;
+  --border: #55556e;
+  --text: #e8e8f0;
+  --text-dim: #6c6c88;
+  --text-muted: #9a9ab4;
+  --accent: #e0b820;
+  --accent-contrast: #10101a;
+  --danger: #c83838;
+  --overlay-bg: rgba(16, 16, 26, 0.82);
+  --kbd-bg: #23233a;
+  --kbd-border: #55556e;
+  --kbd-text: #c8c8dc;
+  --grid-line: #1d1d2c;
+}
+
+body.skin-pixel .game-title,
+body.skin-pixel .label {
+  font-family: 'Courier New', Courier, monospace;
+}
+
+body.skin-pixel .game-title {
+  text-shadow: 3px 3px 0 #c83838;
+}
+
+body.skin-pixel #board,
+body.skin-pixel #next-canvas,
+body.skin-pixel #skin-select,
+body.skin-pixel #restart-btn,
+body.skin-pixel kbd {
+  border-radius: 0;
+  border: 2px solid var(--border);
+}
+
+body.skin-pixel #board,
+body.skin-pixel #next-canvas {
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5);
+}
